@@ -26,7 +26,7 @@ struct column_data {
 /* return length of 's' in letters, ANSI escapes stripped */
 static int item_length(const char *s)
 {
-	return utf8_strnwidth(s, strlen(s), 1);
+	return cast_size_t_to_int(utf8_strnwidth(s, strlen(s), 1));
 }
 
 /*

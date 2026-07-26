@@ -371,7 +371,7 @@ static void stats_table_vaddf(struct stats_table *table,
 
 	strbuf_vaddf(&buf, format, ap);
 	formatted_name = strbuf_detach(&buf, NULL);
-	name_width = utf8_strwidth(formatted_name);
+	name_width = cast_size_t_to_int(utf8_strwidth(formatted_name));
 
 	item = string_list_append_nodup(&table->rows, formatted_name);
 	item->util = entry;
@@ -387,12 +387,12 @@ static void stats_table_vaddf(struct stats_table *table,
 		string_list_append_nodup(&table->annotations, strbuf_detach(&buf, NULL));
 	}
 	if (entry->value) {
-		int value_width = utf8_strwidth(entry->value);
+		int value_width = cast_size_t_to_int(utf8_strwidth(entry->value));
 		if (value_width > table->value_col_width)
 			table->value_col_width = value_width;
 	}
 	if (entry->unit) {
-		int unit_width = utf8_strwidth(entry->unit);
+		int unit_width = cast_size_t_to_int(utf8_strwidth(entry->unit));
 		if (unit_width > table->unit_col_width)
 			table->unit_col_width = unit_width;
 	}
@@ -582,8 +582,8 @@ static void stats_table_print_structure(const struct stats_table *table)
 {
 	const char *name_col_title = _("Repository structure");
 	const char *value_col_title = _("Value");
-	int title_name_width = utf8_strwidth(name_col_title);
-	int title_value_width = utf8_strwidth(value_col_title);
+	int title_name_width = cast_size_t_to_int(utf8_strwidth(name_col_title));
+	int title_value_width = cast_size_t_to_int(utf8_strwidth(value_col_title));
 	int name_col_width = table->name_col_width;
 	int value_col_width = table->value_col_width;
 	int unit_col_width = table->unit_col_width;

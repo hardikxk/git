@@ -325,13 +325,13 @@ static const char *wt_status_diff_status_string(int status)
 	}
 }
 
-static int maxwidth(const char *(*label)(int), int minval, int maxval)
+static size_t maxwidth(const char *(*label)(int), int minval, int maxval)
 {
 	int result = 0, i;
 
 	for (i = minval; i <= maxval; i++) {
 		const char *s = label(i);
-		int len = s ? utf8_strwidth(s) : 0;
+		size_t len = s ? utf8_strwidth(s) : 0;
 		if (len > result)
 			result = len;
 	}
@@ -345,7 +345,7 @@ static void wt_longstatus_print_unmerged_data(struct wt_status *s,
 	struct wt_status_change_data *d = it->util;
 	struct strbuf onebuf = STRBUF_INIT;
 	static char *padding;
-	static int label_width;
+	static size_t label_width;
 	const char *one, *how;
 	int len;
 
@@ -360,7 +360,7 @@ static void wt_longstatus_print_unmerged_data(struct wt_status *s,
 	status_printf(s, color(WT_STATUS_HEADER, s), "\t");
 
 	how = wt_status_unmerged_status_string(d->stagemask);
-	len = label_width - utf8_strwidth(how);
+	len = label_width - cast_size_t_to_int(utf8_strwidth(how));
 	status_printf_more(s, c, "%s%.*s%s\n", how, len, padding, one);
 	strbuf_release(&onebuf);
 }
@@ -429,7 +429,7 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
 	what = wt_status_diff_status_string(status);
 	if (!what)
 		BUG("unhandled diff status %c", status);
-	len = label_width - utf8_strwidth(what);
+	len = label_width - cast_size_t_to_int(utf8_strwidth(what));
 	assert(len >= 0);
 	if (one_name != two_name)
 		status_printf_more(s, c, "%s%.*s%s -> %s",

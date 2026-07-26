@@ -2982,7 +2982,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
 			continue;
 		}
 		fill_print_name(file);
-		len = utf8_strwidth(file->print_name);
+		len = cast_size_t_to_int(utf8_strwidth(file->print_name));
 		if (max_len < len)
 			max_len = len;
 
@@ -3037,7 +3037,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
 	 * making the line longer than the maximum width.
 	 */
 	if (options->stat_width == -1)
-		width = term_columns() - utf8_strnwidth(line_prefix, strlen(line_prefix), 1);
+		width = term_columns() - cast_size_t_to_int(utf8_strnwidth(line_prefix, strlen(line_prefix), 1));
 	else
 		width = options->stat_width ? options->stat_width : 80;
 	number_width = decimal_width(max_change) > number_width ?
@@ -3108,7 +3108,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
 		 * "scale" the filename
 		 */
 		len = name_width;
-		name_len = utf8_strwidth(name);
+		name_len = cast_size_t_to_int(utf8_strwidth(name));
 		if (name_width < name_len) {
 			char *slash;
 			prefix = "...";
@@ -3123,7 +3123,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
 			if (slash)
 				name = slash;
 		}
-		padding = len - utf8_strwidth(name);
+		padding = len - cast_size_t_to_int(utf8_strwidth(name));
 		if (padding < 0)
 			padding = 0;
 

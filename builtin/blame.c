@@ -564,7 +564,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent,
 					name = ci.author_mail.buf;
 				else
 					name = ci.author.buf;
-				pad = longest_author - utf8_strwidth(name);
+				pad = longest_author - cast_size_t_to_int(utf8_strwidth(name));
 				printf(" (%s%*s %10s",
 				       name, pad, "",
 				       format_time(ci.author_time,
@@ -685,9 +685,9 @@ static void find_alignment(struct blame_scoreboard *sb, int *option)
 			suspect->commit->object.flags |= METAINFO_SHOWN;
 			get_commit_info(suspect->commit, &ci);
 			if (*option & OUTPUT_SHOW_EMAIL)
-				num = utf8_strwidth(ci.author_mail.buf);
+				num = cast_size_t_to_int(utf8_strwidth(ci.author_mail.buf));
 			else
-				num = utf8_strwidth(ci.author.buf);
+				num = cast_size_t_to_int(utf8_strwidth(ci.author.buf));
 			if (longest_author < num)
 				longest_author = num;
 			commit_info_destroy(&ci);

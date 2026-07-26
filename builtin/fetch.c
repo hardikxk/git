@@ -850,7 +850,7 @@ static void display_ref_update(struct display_state *display_state, char code,
 			display_state->shown_url = 1;
 		}
 
-		width = (summary_width + strlen(summary) - gettext_width(summary));
+		width = (summary_width + strlen(summary) - cast_size_t_to_int(gettext_width(summary)));
 		remote = prettify_refname(remote);
 		local = prettify_refname(local);
 
