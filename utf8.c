@@ -227,8 +227,9 @@ int utf8_strnwidth(const char *string, size_t len, int skip_ansi)
 	}
 
 	/*
-	 * TODO: fix the interface of this function and `utf8_strwidth()` to
-	 * return `size_t` instead of `int`.
+	 * The function is used in multiple locations where the callers
+	 * expect the result to be a signed int value. We explicitly
+	 * cast the the result to avoid integer overflow.
 	 */
 	return cast_size_t_to_int(string ? width : len);
 }
