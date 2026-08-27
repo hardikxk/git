@@ -336,7 +336,7 @@ static int git_reset_config(const char *var, const char *value,
 int cmd_reset(int argc,
 	      const char **argv,
 	      const char *prefix,
-	      struct repository *repo UNUSED)
+	      struct repository *repo)
 {
 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
 	int no_refresh = 0;
@@ -470,7 +470,7 @@ int cmd_reset(int argc,
 	if (reset_type != SOFT && (reset_type != MIXED || repo_get_work_tree(the_repository)))
 		setup_work_tree(the_repository);
 
-	if (reset_type == MIXED && is_bare_repository(the_repository))
+	if (reset_type == MIXED && is_bare_repository(repo))
 		die(_("%s reset is not allowed in a bare repository"),
 		    _(reset_type_names[reset_type]));
 

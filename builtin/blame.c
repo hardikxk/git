@@ -957,7 +957,7 @@ static void build_ignorelist(struct blame_scoreboard *sb,
 int cmd_blame(int argc,
 	      const char **argv,
 	      const char *prefix,
-	      struct repository *repo UNUSED)
+	      struct repository *repo)
 {
 	struct rev_info revs;
 	char *path = NULL;
@@ -1187,7 +1187,7 @@ parse_done:
 
 	revs.disable_stdin = 1;
 	setup_revisions(argc, argv, &revs, NULL);
-	if (!revs.pending.nr && is_bare_repository(the_repository)) {
+	if (!revs.pending.nr && is_bare_repository(repo)) {
 		struct commit *head_commit;
 		struct object_id head_oid;
 
